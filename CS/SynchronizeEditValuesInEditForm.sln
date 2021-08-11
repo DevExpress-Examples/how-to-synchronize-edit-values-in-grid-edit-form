@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizeEditValuesInEditForm", "SynchronizeEditValuesInEditForm.csproj", "{528B24FA-79D0-46D8-8675-D8F840396844}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizeEditValuesInEditForm_CodeBehind", "SynchronizeEditValuesInEditForm_CodeBehind\SynchronizeEditValuesInEditForm_CodeBehind.csproj", "{528B24FA-79D0-46D8-8675-D8F840396844}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynchronizeEditValuesInEditForm_MVVM", "SynchronizeEditValuesInEditForm_MVVM\SynchronizeEditValuesInEditForm_MVVM.csproj", "{4FF2AB73-95E0-4215-AD7D-0C25615EC7C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{528B24FA-79D0-46D8-8675-D8F840396844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{528B24FA-79D0-46D8-8675-D8F840396844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{528B24FA-79D0-46D8-8675-D8F840396844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FF2AB73-95E0-4215-AD7D-0C25615EC7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF2AB73-95E0-4215-AD7D-0C25615EC7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF2AB73-95E0-4215-AD7D-0C25615EC7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF2AB73-95E0-4215-AD7D-0C25615EC7C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

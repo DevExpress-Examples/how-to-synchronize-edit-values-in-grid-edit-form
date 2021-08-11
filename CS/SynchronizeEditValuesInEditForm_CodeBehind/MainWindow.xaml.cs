@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Windows;
 
-namespace SynchronizeEditValuesInEditForm {
+namespace SynchronizeEditValuesInEditForm_CodeBehind {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -16,7 +16,7 @@ namespace SynchronizeEditValuesInEditForm {
         bool locker = false;
 
         void EditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
-            if(!(e is CellValueChangedInEditFormEventArgs) || locker) {
+            if(locker || !(e is CellValueChangedInEditFormEventArgs)) {
                 return;
             }
 
@@ -32,8 +32,8 @@ namespace SynchronizeEditValuesInEditForm {
 
             locker = true;
 
-            var positionValueData = (EditFormCellData)editFormData.EditFormCellData
-                .FirstOrDefault(d => d is EditFormCellData && ((EditFormCellData)d).FieldName == nameof(DataItem.PositionValue));
+            var positionValueData = editFormData.EditFormCellData.Where(d => d is EditFormCellData).Cast<EditFormCellData>()
+                .FirstOrDefault(d => d.FieldName == nameof(DataItem.PositionValue));
             var amountData = (EditFormCellData)editFormData.EditFormCellData
                 .FirstOrDefault(d => d is EditFormCellData && ((EditFormCellData)d).FieldName == nameof(DataItem.Amount));
 
