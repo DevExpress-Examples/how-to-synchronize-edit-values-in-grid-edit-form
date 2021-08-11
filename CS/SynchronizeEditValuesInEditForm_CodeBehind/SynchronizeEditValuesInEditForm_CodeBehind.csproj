@@ -35,8 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="DevExpress.Data.v21.2" />
-    <Reference Include="DevExpress.Mvvm.v21.2" />
+    <Reference Include="DevExpress.Data.v21.2" />
     <Reference Include="DevExpress.Xpf.Grid.v21.2" />
     <Reference Include="DevExpress.Xpf.Grid.v21.2.Core" />
     <Reference Include="System" />
@@ -59,8 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataItem.cs" />
-    <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
