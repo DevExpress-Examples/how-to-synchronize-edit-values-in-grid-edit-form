@@ -16,7 +16,7 @@ namespace SynchronizeEditValuesInEditForm {
         bool locker = false;
 
         void EditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
-            if(!(e is CellValueChangedInEditFormEventArgs) ||  locker) {
+            if(!(e is CellValueChangedInEditFormEventArgs) || locker) {
                 return;
             }
 
@@ -25,9 +25,13 @@ namespace SynchronizeEditValuesInEditForm {
                 return;
             }
 
+            var editFormData = editorData.RowData;
+            if(editFormData == null || editFormData.EditFormCellData == null) {
+                return;
+            }
+
             locker = true;
 
-            var editFormData = editorData.RowData;
             var positionValueData = (EditFormCellData)editFormData.EditFormCellData
                 .FirstOrDefault(d => d is EditFormCellData && ((EditFormCellData)d).FieldName == nameof(DataItem.PositionValue));
             var amountData = (EditFormCellData)editFormData.EditFormCellData
@@ -35,8 +39,7 @@ namespace SynchronizeEditValuesInEditForm {
 
             try {
                 positionValueData.Value = Convert.ToInt32(amountData.Value) * Convert.ToInt32(e.Value);
-            } catch (FormatException ex) { }
-            finally {
+            } catch(FormatException ex) { } finally {
                 locker = false;
             }
         }
