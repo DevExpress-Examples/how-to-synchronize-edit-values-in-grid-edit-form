@@ -4,9 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SynchronizeEditValuesInEditForm_MVVM"
+        xmlns:dxg="clr-namespace:DevExpress.Xpf.Grid;assembly=DevExpress.Xpf.Grid.v21.2"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <dxg:GridControl ItemsSource="{Binding Items}" >
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="Amount" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="Price"/>
+                <dxg:GridColumn FieldName="PositionValue" ReadOnly="True"/>
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView EditFormShowMode="Inline" CellValueChangingCommand="{Binding SynchronizeValuesCommand}"/>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
     </Grid>
 </Window>
