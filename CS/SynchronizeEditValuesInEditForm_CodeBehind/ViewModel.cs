@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace SynchronizeEditValuesInEditForm {
+namespace SynchronizeEditValuesInEditForm_CodeBehind {
     class ViewModel {
         public ObservableCollection<DataItem> Items { get; set; }
 

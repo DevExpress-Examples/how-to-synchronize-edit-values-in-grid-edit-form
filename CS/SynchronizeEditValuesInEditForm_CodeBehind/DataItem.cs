@@ -1,6 +1,6 @@
 ﻿using DevExpress.Mvvm;
 
-namespace SynchronizeEditValuesInEditForm {
+namespace SynchronizeEditValuesInEditForm_CodeBehind {
     class DataItem : BindableBase {
         public int Amount { get; set; }
 
