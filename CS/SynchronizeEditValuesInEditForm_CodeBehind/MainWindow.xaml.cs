@@ -42,18 +42,21 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
                 return;
             }
 
-            var positionValueData = editFormData.EditFormCellData.Select(d => d as EditFormCellData)
-                .FirstOrDefault(d => d?.FieldName == nameof(DataItem.PositionValue));
-            var amountData = editFormData.EditFormCellData.Select(d => d as EditFormCellData)
-                .FirstOrDefault(d => d?.FieldName == nameof(DataItem.Amount));
+            var positionValueData = editFormData.EditFormCellData.OfType<EditFormCellData>().FirstOrDefault(d => d.FieldName == nameof(DataItem.PositionValue));
+            var amountData = editFormData.EditFormCellData.OfType<EditFormCellData>().FirstOrDefault(d => d.FieldName == nameof(DataItem.Amount));
 
-            locker = true;
+            var amount = (int)amountData.Value;
+            int price = 0;
+            var stringPrice = (string)e.Value;
 
-            try {
-                positionValueData.Value = (Convert.ToInt32(amountData.Value) * Convert.ToInt32(e.Value)).ToString();
-            } catch(FormatException ex) { } finally {
-                locker = false;
+            if(int.TryParse(stringPrice, out price)) {
+                positionValueData.Value = amount * price;
             }
+            if(string.IsNullOrEmpty(stringPrice)) {
+                positionValueData.Value = 0;
+            }
+
+            locker = false;
         }
     }
 }
