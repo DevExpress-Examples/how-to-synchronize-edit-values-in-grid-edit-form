@@ -28,8 +28,8 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
         bool locker = false;
 
         void OnEditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
-            CellValueChangedInEditFormEventArgs editFormArgs = null;
-            if(locker || (editFormArgs = e as CellValueChangedInEditFormEventArgs) == null) {
+            CellValueChangedInEditFormEventArgs editFormArgs = e as CellValueChangedInEditFormEventArgs;
+            if(locker || editFormArgs == null) {
                 return;
             }
 
