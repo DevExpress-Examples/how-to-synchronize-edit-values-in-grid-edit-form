@@ -31,8 +31,25 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
         }
 
         [Command]
-        public void SynchronizeValues(CellValueChangedArgs e) {
+        public void SynchronizeValues(CellValueChangedArgs args) {
+            var editFormArgs = (CellValueChangedInEditFormArgs)args;
+            if(editFormArgs == null || args.Cell.Property != nameof(DataItem.Price)) {
+                return;
+            }
 
+            var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
+            var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
+
+            var amount = (int)amountData.Value;
+            int price = 0;
+            var stringPrice = (string)args.Cell.Value;
+
+            if(int.TryParse(stringPrice, out price)) {
+                positionValueData.Value = amount * price;
+            }
+            if(string.IsNullOrEmpty(stringPrice)) {
+                positionValueData.Value = 0;
+            }
         }
     }
 }

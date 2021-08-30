@@ -24,26 +24,15 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
             var random = new Random();
             grid.ItemsSource = Enumerable.Range(0, 10).Select(i => new DataItem(random)).ToList();
         }
-        
-        bool locker = false;
 
         void OnEditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
             CellValueChangedInEditFormEventArgs editFormArgs = e as CellValueChangedInEditFormEventArgs;
-            if(locker || editFormArgs == null) {
+            if(editFormArgs == null || editFormArgs.Cell.Property != nameof(DataItem.Price)) {
                 return;
             }
 
-            if(editFormArgs.EditorData.FieldName != nameof(DataItem.Price)) {
-                return;
-            }
-
-            var editFormData = editFormArgs.EditorData.RowData;
-            if(editFormData == null || editFormData.EditFormCellData == null) {
-                return;
-            }
-
-            var positionValueData = editFormData.EditFormCellData.OfType<EditFormCellData>().FirstOrDefault(d => d.FieldName == nameof(DataItem.PositionValue));
-            var amountData = editFormData.EditFormCellData.OfType<EditFormCellData>().FirstOrDefault(d => d.FieldName == nameof(DataItem.Amount));
+            var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
+            var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
 
             var amount = (int)amountData.Value;
             int price = 0;
@@ -55,8 +44,6 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
             if(string.IsNullOrEmpty(stringPrice)) {
                 positionValueData.Value = 0;
             }
-
-            locker = false;
         }
     }
 }
