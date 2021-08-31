@@ -26,9 +26,11 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
         public ObservableCollection<DataItem> Items { get; }
 
         public MainViewModel() {
-            var random = new Random();
-            Items = new ObservableCollection<DataItem>(Enumerable.Range(0, 10).Select(i => new DataItem(random)));
+            Items = new ObservableCollection<DataItem>(GetData(10, new Random()));
         }
+
+        IEnumerable<DataItem> GetData(int amount, Random random)
+            => Enumerable.Range(0, amount).Select(i => new DataItem(random));
 
         [Command]
         public void SynchronizeValues(CellValueChangedArgs args) {
@@ -40,16 +42,10 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
             var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
             var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
 
-            var amount = (int)amountData.Value;
             int price = 0;
-            var stringPrice = (string)args.Cell.Value;
 
-            if(int.TryParse(stringPrice, out price)) {
-                positionValueData.Value = amount * price;
-            }
-            if(string.IsNullOrEmpty(stringPrice)) {
-                positionValueData.Value = 0;
-            }
+            int.TryParse((string)args.Cell.Value, out price);
+            positionValueData.Value = (int)amountData.Value * price;
         }
     }
 }

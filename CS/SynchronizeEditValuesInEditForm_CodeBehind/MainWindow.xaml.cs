@@ -1,6 +1,7 @@
 ﻿using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.Grid.EditForm;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -21,9 +22,11 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            var random = new Random();
-            grid.ItemsSource = Enumerable.Range(0, 10).Select(i => new DataItem(random)).ToList();
+            grid.ItemsSource = GetData(10, new Random()).ToList();
         }
+
+        IEnumerable<DataItem> GetData(int amount, Random random)
+            => Enumerable.Range(0, amount).Select(i => new DataItem(random));
 
         void OnEditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
             CellValueChangedInEditFormEventArgs editFormArgs = e as CellValueChangedInEditFormEventArgs;
@@ -34,16 +37,10 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
             var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
             var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
 
-            var amount = (int)amountData.Value;
             int price = 0;
-            var stringPrice = (string)e.Value;
 
-            if(int.TryParse(stringPrice, out price)) {
-                positionValueData.Value = amount * price;
-            }
-            if(string.IsNullOrEmpty(stringPrice)) {
-                positionValueData.Value = 0;
-            }
+            int.TryParse((string)e.Value, out price);
+            positionValueData.Value = (int)amountData.Value * price;
         }
     }
 }
