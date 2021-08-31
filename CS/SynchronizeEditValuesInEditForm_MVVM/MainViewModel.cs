@@ -26,11 +26,13 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
         public ObservableCollection<DataItem> Items { get; }
 
         public MainViewModel() {
-            Items = new ObservableCollection<DataItem>(GetData(10, new Random()));
+            Items = new ObservableCollection<DataItem>(GetData(10));
         }
 
-        IEnumerable<DataItem> GetData(int amount, Random random)
-            => Enumerable.Range(0, amount).Select(i => new DataItem(random));
+        static IEnumerable<DataItem> GetData(int amount) {
+            var random = new Random();
+            return Enumerable.Range(0, amount).Select(i => new DataItem(random));
+        }
 
         [Command]
         public void SynchronizeValues(CellValueChangedArgs args) {

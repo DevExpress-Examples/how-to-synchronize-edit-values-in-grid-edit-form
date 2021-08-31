@@ -22,11 +22,13 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            grid.ItemsSource = GetData(10, new Random()).ToList();
+            grid.ItemsSource = GetData(10).ToList();
         }
 
-        IEnumerable<DataItem> GetData(int amount, Random random)
-            => Enumerable.Range(0, amount).Select(i => new DataItem(random));
+        static IEnumerable<DataItem> GetData(int amount) {
+            var random = new Random();
+            return Enumerable.Range(0, amount).Select(i => new DataItem(random));
+        }
 
         void OnEditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
             CellValueChangedInEditFormEventArgs editFormArgs = e as CellValueChangedInEditFormEventArgs;
