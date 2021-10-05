@@ -12,6 +12,7 @@
             <dxg:GridControl.Columns>
                 <dxg:GridColumn FieldName="Amount" ReadOnly="True"/>
                 <dxg:GridColumn FieldName="Price"/>
+                <dxg:GridColumn FieldName="CanEdit"/>
                 <dxg:GridColumn FieldName="PositionValue" ReadOnly="True"/>
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>

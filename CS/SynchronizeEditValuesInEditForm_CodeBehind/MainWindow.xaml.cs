@@ -11,6 +11,8 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
 
         public int Price { get; set; }
 
+        public bool CanEdit { get; set; } = true;
+
         public int PositionValue { get => Price * Amount; }
 
         public DataItem(Random random) {
@@ -32,7 +34,12 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
 
         void OnEditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
             CellValueChangedInEditFormEventArgs editFormArgs = e as CellValueChangedInEditFormEventArgs;
-            if(editFormArgs == null || editFormArgs.Cell.Property != nameof(DataItem.Price)) {
+            if(editFormArgs == null || (editFormArgs.Cell.Property != nameof(DataItem.Price) && e.Cell.Property != nameof(DataItem.CanEdit))) {
+                return;
+            }
+
+            if(e.Cell.Property == nameof(DataItem.CanEdit)) {
+                editFormArgs.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !bool.Parse(e.Cell.Value.ToString());
                 return;
             }
 
