@@ -18,7 +18,7 @@
                 <dxg:GridColumn FieldName="PositionValue" ReadOnly="True"/>
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
-                <dxg:TableView EditFormShowMode="Inline" CellValueChangingCommand="{Binding SynchronizeValuesCommand}"/>
+                <dxg:TableView EditFormShowMode="Inline" CellValueChangingCommand="{Binding SynchronizeValuesCommand}" RowEditStarting="{Binding InitializeEditingCommand}"/>
             </dxg:GridControl.View>
         </dxg:GridControl>
     </Grid>

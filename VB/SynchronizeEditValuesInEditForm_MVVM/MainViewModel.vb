@@ -21,6 +21,8 @@ Namespace SynchronizeEditValuesInEditForm_MVVM
             End Get
         End Property
 
+        Public Property CanEdit As Boolean = True
+
         Public Sub New(ByVal random As Random)
             Amount = random.Next(1, 10)
             Price = random.Next(100, 1000)
@@ -48,11 +50,21 @@ Namespace SynchronizeEditValuesInEditForm_MVVM
                 Return
             End If
 
+            If args.FieldName Is NameOf(DataItem.CanEdit) Then
+                editFormArgs.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not Boolean.Parse(args.Value.ToString())
+                Return
+            End If
+
             Dim positionValueData = editFormArgs.CellEditors.First(Function(d) d.FieldName Is NameOf(DataItem.PositionValue))
             Dim amountData = editFormArgs.CellEditors.First(Function(d) d.FieldName Is NameOf(DataItem.Amount))
             Dim price As Integer = 0
             Call Integer.TryParse(CStr(args.Value), price)
             positionValueData.Value = CInt(amountData.Value) * price
+        End Sub
+
+        <Command>
+        Public Sub InitializeEditing(ByVal args As RowEditStartingArgs)
+            args.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not CBool(args.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "CanEdit").Value)
         End Sub
     End Class
 End Namespace

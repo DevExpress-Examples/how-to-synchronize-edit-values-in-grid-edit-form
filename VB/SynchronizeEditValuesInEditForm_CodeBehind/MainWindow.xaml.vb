@@ -57,5 +57,9 @@ Namespace SynchronizeEditValuesInEditForm_CodeBehind
             Call Integer.TryParse(CStr(e.Value), price)
             positionValueData.Value = CInt(amountData.Value) * price
         End Sub
+
+        Private Sub OnRowEditStarting(ByVal sender As Object, ByVal e As RowEditStartingEventArgs)
+            e.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not CBool(e.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "CanEdit").Value)
+        End Sub
     End Class
 End Namespace
