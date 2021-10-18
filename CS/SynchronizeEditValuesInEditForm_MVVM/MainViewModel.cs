@@ -17,6 +17,8 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
 
         public int PositionValue { get => Price * Amount; }
 
+        public bool CanEdit { get; set; } = true;
+
         public DataItem(Random random) {
             Amount = random.Next(1, 10);
             Price = random.Next(100, 1000);
@@ -41,6 +43,11 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
                 return;
             }
 
+            if(args.FieldName == nameof(DataItem.CanEdit)) {
+                editFormArgs.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !bool.Parse(args.Value.ToString());
+                return;
+            }
+
             var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
             var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
 
@@ -48,6 +55,11 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
 
             int.TryParse((string)args.Value, out price);
             positionValueData.Value = (int)amountData.Value * price;
+        }
+
+        [Command]
+        public void InitializeEditing(RowEditStartingArgs args) {
+            args.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !(bool)args.CellEditors.FirstOrDefault(x => x.FieldName == "CanEdit").Value;
         }
     }
 }

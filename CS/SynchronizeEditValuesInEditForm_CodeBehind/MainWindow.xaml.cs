@@ -51,5 +51,9 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
             int.TryParse((string)e.Value, out price);
             positionValueData.Value = (int)amountData.Value * price;
         }
+
+        private void OnRowEditStarting(object sender, RowEditStartingEventArgs e) {
+            e.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !(bool)e.CellEditors.FirstOrDefault(x => x.FieldName == "CanEdit").Value;
+        }
     }
 }
