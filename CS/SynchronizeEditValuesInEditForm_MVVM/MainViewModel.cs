@@ -59,7 +59,7 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
 
         [Command]
         public void InitializeEditing(RowEditStartingArgs args) {
-            args.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !(bool)args.CellEditors.FirstOrDefault(x => Equals(x.FieldName, "CanEdit")).Value;
+            args.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !(bool)args.CellEditors.FirstOrDefault(x => string.Equals(x.FieldName, "CanEdit")).Value;
         }
     }
 }
