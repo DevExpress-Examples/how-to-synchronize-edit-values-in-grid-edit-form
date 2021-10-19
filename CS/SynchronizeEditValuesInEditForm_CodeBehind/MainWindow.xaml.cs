@@ -53,7 +53,7 @@ namespace SynchronizeEditValuesInEditForm_CodeBehind {
         }
 
         private void OnRowEditStarting(object sender, RowEditStartingEventArgs e) {
-            e.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !(bool)e.CellEditors.FirstOrDefault(x => string.Equals(x.FieldName, "CanEdit")).Value;
+            e.CellEditors.FirstOrDefault(x => string.Equals(x.FieldName, "Price")).ReadOnly = !(bool)e.CellEditors.FirstOrDefault(x => string.Equals(x.FieldName, "CanEdit")).Value;
         }
     }
 }
