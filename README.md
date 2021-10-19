@@ -9,7 +9,7 @@
 ## Files to Look At
 
 ### MVVM Pattern
-- [MainViewModel.cs](./CS/SynchronizeEditValuesInEditForm_MVVM/MainWindow.xaml.cs)
+- [MainViewModel.cs](./CS/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.cs)
 - [MainWindow.xaml](./CS/SynchronizeEditValuesInEditForm_MVVM/MainWindow.xaml)
 
 ### Code-Behind
