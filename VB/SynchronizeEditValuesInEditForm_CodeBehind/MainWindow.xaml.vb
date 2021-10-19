@@ -42,24 +42,24 @@ Namespace SynchronizeEditValuesInEditForm_CodeBehind
 
         Private Sub OnEditFormCellValueChanging(ByVal sender As Object, ByVal e As CellValueChangedEventArgs)
             Dim editFormArgs As CellValueChangedInEditFormEventArgs = TryCast(e, CellValueChangedInEditFormEventArgs)
-            If editFormArgs Is Nothing OrElse editFormArgs.Cell.[Property] IsNot NameOf(DataItem.Price) AndAlso e.Cell.[Property] IsNot NameOf(DataItem.CanEdit) Then
+            If editFormArgs Is Nothing OrElse Not Object.Equals(editFormArgs.Cell.[Property], NameOf(DataItem.Price)) AndAlso Not Object.Equals(e.Cell.[Property], NameOf(DataItem.CanEdit)) Then
                 Return
             End If
 
-            If e.Cell.[Property] Is NameOf(DataItem.CanEdit) Then
-                editFormArgs.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not Boolean.Parse(e.Cell.Value.ToString())
+            If Object.Equals(e.Cell.[Property], NameOf(DataItem.CanEdit)) Then
+                editFormArgs.CellEditors.FirstOrDefault(Function(x) Object.Equals(x.FieldName, NameOf(DataItem.Price))).[ReadOnly] = Not Boolean.Parse(e.Cell.Value.ToString())
                 Return
             End If
 
-            Dim positionValueData = editFormArgs.CellEditors.First(Function(d) d.FieldName Is NameOf(DataItem.PositionValue))
-            Dim amountData = editFormArgs.CellEditors.First(Function(d) d.FieldName Is NameOf(DataItem.Amount))
+            Dim positionValueData = editFormArgs.CellEditors.First(Function(d) Object.Equals(d.FieldName, NameOf(DataItem.PositionValue)))
+            Dim amountData = editFormArgs.CellEditors.First(Function(d) Object.Equals(d.FieldName, NameOf(DataItem.Amount)))
             Dim price As Integer = 0
             Call Integer.TryParse(CStr(e.Value), price)
             positionValueData.Value = CInt(amountData.Value) * price
         End Sub
 
         Private Sub OnRowEditStarting(ByVal sender As Object, ByVal e As RowEditStartingEventArgs)
-            e.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, "Price")).[ReadOnly] = Not CBool(e.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, "CanEdit")).Value)
+            e.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, NameOf(DataItem.Price))).[ReadOnly] = Not CBool(e.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, NameOf(DataItem.CanEdit))).Value)
         End Sub
     End Class
 End Namespace

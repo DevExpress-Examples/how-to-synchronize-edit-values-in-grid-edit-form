@@ -44,7 +44,7 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
             }
 
             if(args.FieldName == nameof(DataItem.CanEdit)) {
-                editFormArgs.CellEditors.FirstOrDefault(x => x.FieldName == "Price").ReadOnly = !bool.Parse(args.Value.ToString());
+                editFormArgs.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price)).ReadOnly = !bool.Parse(args.Value.ToString());
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
 
         [Command]
         public void InitializeEditing(RowEditStartingArgs args) {
-            args.CellEditors.FirstOrDefault(x => string.Equals(x.FieldName, "Price")).ReadOnly = !(bool)args.CellEditors.FirstOrDefault(x => string.Equals(x.FieldName, "CanEdit")).Value;
+            args.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price)).ReadOnly = !(bool)args.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.CanEdit)).Value;
         }
     }
 }

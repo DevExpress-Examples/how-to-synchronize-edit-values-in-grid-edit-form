@@ -46,17 +46,17 @@ Namespace SynchronizeEditValuesInEditForm_MVVM
         <Command>
         Public Sub SynchronizeValues(ByVal args As CellValueChangedArgs)
             Dim editFormArgs = CType(args, CellValueChangedInEditFormArgs)
-            If editFormArgs Is Nothing OrElse args.FieldName IsNot NameOf(DataItem.Price) AndAlso args.FieldName IsNot NameOf(DataItem.CanEdit) Then
+            If editFormArgs Is Nothing OrElse Not Object.Equals(args.FieldName, NameOf(DataItem.Price)) AndAlso Not Object.Equals(args.FieldName, NameOf(DataItem.CanEdit)) Then
                 Return
             End If
 
-            If args.FieldName Is NameOf(DataItem.CanEdit) Then
-                editFormArgs.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not Boolean.Parse(args.Value.ToString())
+            If Object.Equals(args.FieldName, NameOf(DataItem.CanEdit)) Then
+                editFormArgs.CellEditors.FirstOrDefault(Function(x) Object.Equals(x.FieldName, "Price")).[ReadOnly] = Not Boolean.Parse(args.Value.ToString())
                 Return
             End If
 
-            Dim positionValueData = editFormArgs.CellEditors.First(Function(d) d.FieldName Is NameOf(DataItem.PositionValue))
-            Dim amountData = editFormArgs.CellEditors.First(Function(d) d.FieldName Is NameOf(DataItem.Amount))
+            Dim positionValueData = editFormArgs.CellEditors.First(Function(d) Object.Equals(d.FieldName, NameOf(DataItem.PositionValue)))
+            Dim amountData = editFormArgs.CellEditors.First(Function(d) Object.Equals(d.FieldName, NameOf(DataItem.Amount)))
             Dim price As Integer = 0
             Call Integer.TryParse(CStr(args.Value), price)
             positionValueData.Value = CInt(amountData.Value) * price
