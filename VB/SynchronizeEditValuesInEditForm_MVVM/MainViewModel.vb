@@ -46,7 +46,7 @@ Namespace SynchronizeEditValuesInEditForm_MVVM
         <Command>
         Public Sub SynchronizeValues(ByVal args As CellValueChangedArgs)
             Dim editFormArgs = CType(args, CellValueChangedInEditFormArgs)
-            If editFormArgs Is Nothing OrElse args.FieldName IsNot NameOf(DataItem.Price) Then
+            If editFormArgs Is Nothing OrElse args.FieldName IsNot NameOf(DataItem.Price) AndAlso args.FieldName IsNot NameOf(DataItem.CanEdit) Then
                 Return
             End If
 

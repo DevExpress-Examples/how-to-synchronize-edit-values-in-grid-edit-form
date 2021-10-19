@@ -16,9 +16,10 @@
                 <dxg:GridColumn FieldName="Amount" ReadOnly="True"/>
                 <dxg:GridColumn FieldName="Price"/>
                 <dxg:GridColumn FieldName="PositionValue" ReadOnly="True"/>
+                <dxg:GridColumn FieldName="CanEdit"/>
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
-                <dxg:TableView EditFormShowMode="Inline" CellValueChangingCommand="{Binding SynchronizeValuesCommand}" RowEditStarting="{Binding InitializeEditingCommand}"/>
+                <dxg:TableView EditFormShowMode="Inline" CellValueChangingCommand="{Binding SynchronizeValuesCommand}" RowEditStartingCommand="{Binding InitializeEditingCommand}"/>
             </dxg:GridControl.View>
         </dxg:GridControl>
     </Grid>
