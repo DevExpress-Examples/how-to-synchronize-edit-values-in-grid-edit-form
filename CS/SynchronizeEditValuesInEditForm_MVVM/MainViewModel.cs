@@ -39,7 +39,7 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
         [Command]
         public void SynchronizeValues(CellValueChangedArgs args) {
             var editFormArgs = (CellValueChangedInEditFormArgs)args;
-            if(editFormArgs == null || args.FieldName != nameof(DataItem.Price)) {
+            if(editFormArgs == null || (args.FieldName != nameof(DataItem.Price) && args.FieldName != nameof(DataItem.CanEdit))) {
                 return;
             }
 
