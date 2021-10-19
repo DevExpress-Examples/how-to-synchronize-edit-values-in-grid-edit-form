@@ -64,7 +64,7 @@ Namespace SynchronizeEditValuesInEditForm_MVVM
 
         <Command>
         Public Sub InitializeEditing(ByVal args As RowEditStartingArgs)
-            args.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not CBool(args.CellEditors.FirstOrDefault(Function(x) CBool(Equals(x.FieldName, "CanEdit"))).Value)
+            args.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not CBool(args.CellEditors.FirstOrDefault(Function(x) Object.Equals(x.FieldName, "CanEdit")).Value)
         End Sub
     End Class
 End Namespace
