@@ -59,7 +59,7 @@ Namespace SynchronizeEditValuesInEditForm_CodeBehind
         End Sub
 
         Private Sub OnRowEditStarting(ByVal sender As Object, ByVal e As RowEditStartingEventArgs)
-            e.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not CBool(e.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "CanEdit").Value)
+            e.CellEditors.FirstOrDefault(Function(x) x.FieldName Is "Price").[ReadOnly] = Not CBool(e.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, "CanEdit")).Value)
         End Sub
     End Class
 End Namespace
