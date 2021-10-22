@@ -1,7 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.Xpf;
-using DevExpress.Xpf.Grid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,27 +38,32 @@ namespace SynchronizeEditValuesInEditForm_MVVM {
         [Command]
         public void SynchronizeValues(CellValueChangedArgs args) {
             var editFormArgs = (CellValueChangedInEditFormArgs)args;
-            if(editFormArgs == null || (args.FieldName != nameof(DataItem.Price) && args.FieldName != nameof(DataItem.CanEdit))) {
+            if(editFormArgs == null) {
                 return;
             }
 
             if(args.FieldName == nameof(DataItem.CanEdit)) {
-                editFormArgs.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price)).ReadOnly = !bool.Parse(args.Value.ToString());
+                var priceData = editFormArgs.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price));
+                priceData.ReadOnly = !bool.Parse(args.Value.ToString());
                 return;
             }
 
-            var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
-            var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
+            if(args.FieldName == nameof(DataItem.Price)) {
+                var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
+                var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
 
-            int price = 0;
+                int price = 0;
 
-            int.TryParse((string)args.Value, out price);
-            positionValueData.Value = (int)amountData.Value * price;
+                int.TryParse((string)args.Value, out price);
+                positionValueData.Value = (int)amountData.Value * price;
+            }
         }
 
         [Command]
         public void InitializeEditing(RowEditStartingArgs args) {
-            args.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price)).ReadOnly = !(bool)args.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.CanEdit)).Value;
+            var priceData = args.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price));
+            var canEditData = args.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.CanEdit));
+            priceData.ReadOnly = !(bool)canEditData.Value;
         }
     }
 }

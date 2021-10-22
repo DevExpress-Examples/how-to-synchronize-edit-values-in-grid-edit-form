@@ -1,7 +1,6 @@
 Imports DevExpress.Mvvm
 Imports DevExpress.Mvvm.DataAnnotations
 Imports DevExpress.Mvvm.Xpf
-Imports DevExpress.Xpf.Grid
 Imports System
 Imports System.Collections.Generic
 Imports System.Collections.ObjectModel
@@ -46,25 +45,30 @@ Namespace SynchronizeEditValuesInEditForm_MVVM
         <Command>
         Public Sub SynchronizeValues(ByVal args As CellValueChangedArgs)
             Dim editFormArgs = CType(args, CellValueChangedInEditFormArgs)
-            If editFormArgs Is Nothing OrElse Not Object.Equals(args.FieldName, NameOf(DataItem.Price)) AndAlso Not Object.Equals(args.FieldName, NameOf(DataItem.CanEdit)) Then
+            If editFormArgs Is Nothing Then
                 Return
             End If
 
-            If Object.Equals(args.FieldName, NameOf(DataItem.CanEdit)) Then
-                editFormArgs.CellEditors.FirstOrDefault(Function(x) Object.Equals(x.FieldName, "Price")).[ReadOnly] = Not Boolean.Parse(args.Value.ToString())
+            If Equals(args.FieldName, NameOf(DataItem.CanEdit)) Then
+                Dim priceData = editFormArgs.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, NameOf(DataItem.Price)))
+                priceData.[ReadOnly] = Not Boolean.Parse(args.Value.ToString())
                 Return
             End If
 
-            Dim positionValueData = editFormArgs.CellEditors.First(Function(d) Object.Equals(d.FieldName, NameOf(DataItem.PositionValue)))
-            Dim amountData = editFormArgs.CellEditors.First(Function(d) Object.Equals(d.FieldName, NameOf(DataItem.Amount)))
-            Dim price As Integer = 0
-            Call Integer.TryParse(CStr(args.Value), price)
-            positionValueData.Value = CInt(amountData.Value) * price
+            If Equals(args.FieldName, NameOf(DataItem.Price)) Then
+                Dim positionValueData = editFormArgs.CellEditors.First(Function(d) Equals(d.FieldName, NameOf(DataItem.PositionValue)))
+                Dim amountData = editFormArgs.CellEditors.First(Function(d) Equals(d.FieldName, NameOf(DataItem.Amount)))
+                Dim price As Integer = 0
+                Call Integer.TryParse(CStr(args.Value), price)
+                positionValueData.Value = CInt(amountData.Value) * price
+            End If
         End Sub
 
         <Command>
         Public Sub InitializeEditing(ByVal args As RowEditStartingArgs)
-            args.CellEditors.FirstOrDefault(Function(x) Object.Equals(x.FieldName, "Price")).[ReadOnly] = Not CBool(args.CellEditors.FirstOrDefault(Function(x) Object.Equals(x.FieldName, "CanEdit")).Value)
+            Dim priceData = args.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, NameOf(DataItem.Price)))
+            Dim canEditData = args.CellEditors.FirstOrDefault(Function(x) Equals(x.FieldName, NameOf(DataItem.CanEdit)))
+            priceData.[ReadOnly] = Not CBool(canEditData.Value)
         End Sub
     End Class
 End Namespace
