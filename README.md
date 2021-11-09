@@ -5,6 +5,9 @@
 <!-- default badges end -->
 # Data Grid for WPF - How to Process Related Cells in the Edit Form
 
+This example illustrates how to process related cells in the Edit Form. The Edit Form contains information about goods. A user can change the `Price` value if the `CanEdit` checkbox is checked. `PositionValue` is the result of `Price` and `Amount` multiplication. 
+The following code sample disables the Price editor depending on the `CanEdit` value and assigns the result of `Price` and `Amount` multiplication to the `PositionValue` editor.
+Handle the RowEditStarting event to initialize values in editors when a user starts to edit the row. 
 
 
 <!-- default file list -->
