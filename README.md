@@ -5,10 +5,43 @@
 <!-- default badges end -->
 # Data Grid for WPF - How to Process Related Cells in the Edit Form
 
-This example illustrates how to process related cells in the Edit Form. The Edit Form contains information about goods. A user can change the `Price` value if the `CanEdit` checkbox is checked. `PositionValue` is the result of `Price` and `Amount` multiplication. 
-The following code sample disables the Price editor depending on the `CanEdit` value and assigns the result of `Price` and `Amount` multiplication to the `PositionValue` editor.
-Handle the RowEditStarting event to initialize values in editors when a user starts to edit the row. 
+This example illustrates how to process related cells in the Edit Form. The form contains information about goods. A user can change the `Price` value if the `CanEdit` checkbox is checked. `PositionValue` is the result of `Price` and `Amount` multiplication. Handle the [RowEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStarting) event to initialize values in editors when a user starts to edit the row. The [CellValueChanging](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.CellValueChanging) event handler disables the `Price` editor depending on the `CanEdit` value and calculates `PositionValue`. 
 
+```cs
+void OnEditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
+    CellValueChangedInEditFormEventArgs editFormArgs = e as CellValueChangedInEditFormEventArgs;
+    //...
+    if(e.Cell.Property == nameof(DataItem.CanEdit)) {
+        var priceData = editFormArgs.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price));
+        priceData.ReadOnly = !bool.Parse(e.Cell.Value.ToString());
+        return;     
+    }
+    if(e.Cell.Property == nameof(DataItem.Price)) {
+        var positionValueData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.PositionValue));
+        var amountData = editFormArgs.CellEditors.First(d => d.FieldName == nameof(DataItem.Amount));
+
+         int price = 0;
+
+         int.TryParse((string)e.Value, out price);
+         positionValueData.Value = (int)amountData.Value * price;
+    }
+}
+
+private void OnRowEditStarting(object sender, RowEditStartingEventArgs e) {
+    var priceData = e.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.Price));
+    var canEditData = e.CellEditors.FirstOrDefault(x => x.FieldName == nameof(DataItem.CanEdit));
+    priceData.ReadOnly = !(bool)canEditData.Value;
+}
+
+```
+
+Alternatively, you can create commands in a View Model and bind them to the [RowEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStartingCommand) and [CellValueChangingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.CellValueChangingCommand) properties.
+
+In the [TreeListView](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView), use the following events and properties: 
+- [NodeEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.NodeEditStarting)
+- [TreeListView.CellValueChanging](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.CellValueChanging)
+- [NodeEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.NodeEditStartingCommand)
+- [TreeListView.CellValueChangingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.CellValueChangingCommand)
 
 <!-- default file list -->
 
@@ -28,7 +61,9 @@ Handle the RowEditStarting event to initialize values in editors when a user sta
 
 - [Edit Form](https://docs.devexpress.com/WPF/401667/controls-and-libraries/data-grid/data-editing-and-validation/modify-cell-values/edit-entire-row?v=21.2#edit-form)
 - [RowEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStarting) / [NodeEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.NodeEditStarting)
-- [RowEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStartingCommand) / [NodeEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.NodeEditStarting)
+- [RowEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStartingCommand) / [NodeEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.NodeEditStartingCommand)
+- [CellValueChanging](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.CellValueChanging) / [TreeListView.CellValueChanging](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.CellValueChanging)
+- [CellValueChangingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.CellValueChangingCommand) / [TreeListView.CellValueChangingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.CellValueChangingCommand)
 
 ## More Examples
 - [Data Grid for WPF - How to Specify Edit Form Settings](https://github.com/DevExpress-Examples/wpf-data-grid-specify-edit-form-settings)
