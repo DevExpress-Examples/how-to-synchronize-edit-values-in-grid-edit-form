@@ -5,22 +5,28 @@
 <!-- default badges end -->
 # Data Grid for WPF - How to Process Related Cells in the Edit Form
 
+
+
 <!-- default file list -->
 
 ## Files to Look At
 
-### MVVM Pattern
-- [MainViewModel.cs](./CS/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.cs)
-- [MainWindow.xaml](./CS/SynchronizeEditValuesInEditForm_MVVM/MainWindow.xaml)
-
 ### Code-Behind
-- [MainViewModel.xaml.cs](./CS/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml.cs)
-- [MainWindow.xaml](./CS/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml)
+- [MainViewModel.xaml.cs](./CS/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml.cs#L34-L55) ([MainViewModel.xaml.vb](./VB/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml.vb#L42-L61))
+- [MainWindow.xaml](./CS/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml#L19) ([MainWindow.xaml](./VB/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml#L19))
+
+### MVVM Pattern
+- [MainViewModel.cs](./CS/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.cs#L38-L60) ([MainViewModel.vb](./Vb/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.vb#L45-L65))
+- [MainWindow.xaml](./CS/SynchronizeEditValuesInEditForm_MVVM/MainWindow.xaml#L22) ([MainWindow.xaml](./VB/SynchronizeEditValuesInEditForm_MVVM/MainWindow.xaml#L22))
 
 <!-- default file list end -->
 
 ## Documentation
 
 - [Edit Form](https://docs.devexpress.com/WPF/401667/controls-and-libraries/data-grid/data-editing-and-validation/modify-cell-values/edit-entire-row?v=21.2#edit-form)
+- [RowEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStarting) / [NodeEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.NodeEditStarting)
+- [RowEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStartingCommand) / [NodeEditStartingCommand](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeListView.NodeEditStarting)
 
 ## More Examples
+- [Data Grid for WPF - How to Specify Edit Form Settings](https://github.com/DevExpress-Examples/wpf-data-grid-specify-edit-form-settings)
+- [Data Grid for WPF - How to Pause Data Updates in the Edit Form](https://github.com/DevExpress-Examples/wpf-data-grid-edit-form-pause-updates)
