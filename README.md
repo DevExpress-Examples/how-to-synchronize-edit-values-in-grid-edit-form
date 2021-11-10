@@ -5,7 +5,7 @@
 <!-- default badges end -->
 # Data Grid for WPF - How to Process Related Cells in the Edit Form
 
-This example illustrates how to process related cells in the Edit Form. The form contains information about goods. A user can change the `Price` value if the `CanEdit` checkbox is checked. `PositionValue` is the result of `Price` and `Amount` multiplication. Handle the [RowEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStarting) event to initialize values in editors when a user starts to edit the row. The [CellValueChanging](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.CellValueChanging) event handler disables the `Price` editor depending on the `CanEdit` value and calculates `PositionValue`. 
+This example illustrates how to process related cells in the Edit Form. This Edit Form contains information about goods. A user can change the `Price` value if the `CanEdit` checkbox is checked. `PositionValue` is the result of `Price` and `Amount` multiplication. Handle the [RowEditStarting](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TableView.RowEditStarting) event to initialize values in editors when a user starts to edit the row. The [CellValueChanging](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.GridViewBase.CellValueChanging) event handler disables the `Price` editor depending on the `CanEdit` value and calculates `PositionValue`. 
 
 ```cs
 void OnEditFormCellValueChanging(object sender, CellValueChangedEventArgs e) {
