@@ -52,7 +52,7 @@ In the [TreeListView](https://docs.devexpress.com/WPF/DevExpress.Xpf.Grid.TreeLi
 - [MainWindow.xaml](./CS/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml#L19) ([MainWindow.xaml](./VB/SynchronizeEditValuesInEditForm_CodeBehind/MainWindow.xaml#L19))
 
 ### MVVM Pattern
-- [MainViewModel.cs](./CS/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.cs#L38-L60) ([MainViewModel.vb](./Vb/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.vb#L45-L65))
+- [MainViewModel.cs](./CS/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.cs#L38-L60) ([MainViewModel.vb](./VB/SynchronizeEditValuesInEditForm_MVVM/MainViewModel.vb#L45-L65))
 - [MainWindow.xaml](./CS/SynchronizeEditValuesInEditForm_MVVM/MainWindow.xaml#L22) ([MainWindow.xaml](./VB/SynchronizeEditValuesInEditForm_MVVM/MainWindow.xaml#L22))
 
 <!-- default file list end -->
